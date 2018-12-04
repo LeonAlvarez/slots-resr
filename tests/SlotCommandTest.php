@@ -1,30 +1,9 @@
 <?php
 
 use App\Console\Commands\SlotCommand;
-use Mockery as m;
-
 class SlotCommandTest extends TestCase
 {
-    public function testCommandOutput()
-    {
-        
-    }
-
-   /*  public function test_generate_board_from_list()
-    {
-        $slot_command = new SlotCommand();
-        $mocked_list = collect(['J', 'J', 'J', 'Q', 'K', 'cat', 'J', 'Q', 'monkey', 'bird', 'bird', 'bird', 'J', 'Q', 'A']);
-        $board = $this->invokeMethod($slot_command, 'generateBoard', array($mocked_list));
-
-        $expected_board = collect([
-            0 => 'J', 3 => 'J', 6 => 'J', 9 => 'Q', 12 => 'K',
-            1 => 'cat', 4 => 'J', 7 => 'Q', 10 => 'monkey', 13 => 'bird',
-            2 => 'bird', 5 => 'bird', 8 => 'J', 11 => 'Q', 14 => 'A'
-        ]);
-
-        $this->assertEmpty($expected_board->diffAssoc($board));
-    }
-
+    
     public function test_payline_with_3_matches()
     {
         $slot_command = new SlotCommand();
@@ -44,11 +23,11 @@ class SlotCommandTest extends TestCase
     public function test_payline_with_4_matches()
     {
         $slot_command = new SlotCommand();
-        $mocked_payline = collect([2, 5, 8, 11, 14]);
+        $mocked_payline = collect([2, 4, 6, 10, 14]);
         $mocked_board = collect([
-            0 => 'J', 3 => 'J', 6 => 'J', 9 => 'Q', 12 => 'K',
-            1 => 'cat', 4 => 'J', 7 => 'Q', 10 => 'monkey', 13 => 'bird',
-            2 => 'bird', 5 => 'bird', 8 => 'bird', 11 => 'bird', 14 => 'K'
+            0 => 'bird',   3 => 'J',    6 => 'K', 9 => 'Q',     12 => 'J',
+            1 => 'cat', 4 => 'K',    7 => 'Q', 10 => 'K',    13 => 'bird',
+            2 => 'K',   5 => 'bird', 8 => 'J', 11 => 'bird', 14 => 'bird'
         ]);
 
         $matches_and_won = $this->invokeMethod($slot_command, 'getMatchesAndWonAmount', array($mocked_payline, $mocked_board));
@@ -60,11 +39,11 @@ class SlotCommandTest extends TestCase
     public function test_payline_with_5_matches()
     {
         $slot_command = new SlotCommand();
-        $mocked_payline = collect([2, 5, 8, 11, 14]);
+        $mocked_payline = collect([0, 4, 8, 10, 12]);
         $mocked_board = collect([
-            0 => 'J', 3 => 'J', 6 => 'J', 9 => 'Q', 12 => 'K',
-            1 => 'cat', 4 => 'J', 7 => 'Q', 10 => 'monkey', 13 => 'bird',
-            2 => 'monkey', 5 => 'monkey', 8 => 'monkey', 11 => 'monkey', 14 => 'monkey'
+            0 => 'J', 3 => 'J', 6 => 'J', 9 => 'Q', 12 => 'J',
+            1 => 'cat', 4 => 'J', 7 => 'Q', 10 => 'J', 13 => 'bird',
+            2 => 'K', 5 => 'bird', 8 => 'J', 11 => 'bird', 14 => 'bird'
         ]);
 
         $matches_and_won = $this->invokeMethod($slot_command, 'getMatchesAndWonAmount', array($mocked_payline, $mocked_board));
@@ -120,7 +99,7 @@ class SlotCommandTest extends TestCase
         }));
 
     }
- */
+
     /**
      * Call protected/private method of a class to allow testing it.
      *

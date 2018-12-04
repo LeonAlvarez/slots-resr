@@ -30,7 +30,7 @@ class SlotCommand extends Command {
 
     protected $matchs_pay_rate = [3 => 0.2 , 4 => 2, 5 => 10];
 
-    protected $symbols = [9, 10, 'J', 'Q', 'K', 'A', 'C', 'D', 'M', 'B'];
+    protected $symbols = [9, 10, 'J', 'Q', 'K', 'A', 'cat', 'dog', 'monkey', 'bird'];
 
     protected $pay_lines = [
         [0, 3, 6, 9, 12],
@@ -63,7 +63,6 @@ class SlotCommand extends Command {
 
         $this->comment('Slot game result:' . "\n");
         $this->info(json_encode($data));
-
         return json_encode($data);
     }
 
@@ -75,12 +74,12 @@ class SlotCommand extends Command {
     protected function generateList()
     {
         $this->line("Generating items that will compound board .... . \n");
-
         $list = collect(range(0, $this->rows * $this->cols))
             ->map(function() {
+                srand(5);
                 return $this->symbols[random_int(0, count($this->symbols) - 1)];
             });
-    
+
         $this->info('List generated: ' . $list->implode(', ') . "\n");
         return $list;
     }
@@ -135,19 +134,14 @@ class SlotCommand extends Command {
             return $board[$item];
         });
 
-        $current = $line[0];
-        $symbol_index = 0;
-        $matches = array_fill(0, count($line), 0);
-
-        foreach ($line as $symbol) {
-            if($symbol != $current) {
-                $current = $symbol;
-                $symbol_index++;
+        $current_char = null;
+        foreach ($line as $char) {
+            if ($current_char !== $char) {
+                $current_char = $char;
+                $matches[$char] = 0;
             }
-            else
-                $matches[$symbol_index]++;
+            $matches[$char]++;
         }
-
         $max_matches = max($matches);
         $win_amount = $max_matches >= 3 ? $this->matchs_pay_rate[$max_matches] * $this->bet_amount : 0;
 
